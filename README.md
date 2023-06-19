@@ -21,12 +21,12 @@ npm i --global expo-cli
 
 Para funcionar perfeitamente, precisa-se baixar e rodar o projeto Back-End da aplicação.
 \
-Que pode ser encontrado [AQUI](https://www.postgresql.org/download/)
+Que pode ser encontrado [AQUI](https://github.com/JoaoBoll/pizzaria-app-back)
 
 ---
 
-Este é o projeto Mobile, caso queira rodar o sistema Web inteiro, o FrontEnd se encontra em:
-[pizzaria-app-front](https://github.com/JoaoBoll/pizzaria-app-back)
+Este é o projeto Mobile, caso queira rodar o sistema Web inteiro, o FrontEnd se encontra 
+[AQUI](https://github.com/JoaoBoll/pizzaria-app-front)
 
 ---
 
