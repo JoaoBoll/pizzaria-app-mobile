@@ -12,17 +12,24 @@ Instalar Expo CLI\
 Pode ser encontrada a documentação [AQUI](https://docs.expo.dev)
 
 Ou rodar os seguintes comandos:
+
 ```bash
 npm i --global expo-cli    
 ```
+
 ---
+
 Para funcionar perfeitamente, precisa-se baixar e rodar o projeto Back-End da aplicação.
 \
 Que pode ser encontrado [AQUI](https://www.postgresql.org/download/)
+
 ---
+
 Este é o projeto Mobile, caso queira rodar o sistema Web inteiro, o FrontEnd se encontra em:
 [pizzaria-app-front](https://github.com/JoaoBoll/pizzaria-app-back)
+
 ---
+
 ## Rodar o projeto:
 ```bash
 npx expo start
