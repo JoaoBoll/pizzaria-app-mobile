@@ -34,3 +34,7 @@ Este é o projeto Mobile, caso queira rodar o sistema Web inteiro, o FrontEnd se
 ```bash
 npx expo start
 ```
+---
+Anotações DEV:
+
+Async Storage:
