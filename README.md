@@ -1,10 +1,13 @@
 # Primeiros passos para rodar o programa:
 
 ---
+
 Projeto em NodeJs, então é necessário instalar o mesmo. Versão usada: `18.16.0`
 \
 Pode ser encontrado [AQUI](https://nodejs.org/dist/v18.16.0/)
+
 ---
+
 Instalar Expo CLI\
 Pode ser encontrada a documentação [AQUI](https://docs.expo.dev)
 
