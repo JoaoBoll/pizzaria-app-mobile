@@ -17,12 +17,12 @@ export default function SignIn() {
     const [email, setEmail]= useState('teste@teste.com');
     const [password, setPassword]= useState('123456');
 
-    function handleLogin() {
+    async function handleLogin() {
         if (email === '' || password === '') {
             return;
         }
 
-        signIn({email, password});
+        await signIn({email, password});
 
     }
 

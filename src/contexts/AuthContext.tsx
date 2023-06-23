@@ -1,6 +1,8 @@
 import React, {useState, createContext, ReactNode, useEffect} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import api from "../services/api";
+import api from "../services/api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type AuthContextData = {
     user: UserProps;
@@ -27,6 +29,11 @@ type AuthProviderProps = {
     children: ReactNode;
 }
 
+type SignInProps = {
+    email: string,
+    password: string
+}
+
 export const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider({children}: AuthProviderProps) {
@@ -37,6 +44,8 @@ export function AuthProvider({children}: AuthProviderProps) {
         email: "",
         token: ""
     });
+
+    const [loadingAuth, setLoadingAuth] = useState(false);
 
     const [loadingAuth, setLoadingAuth] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -102,6 +111,43 @@ export function AuthProvider({children}: AuthProviderProps) {
             email: "",
             token:""
         })
+    }
+
+    async function signIn({email, password} : SignInProps) {
+        setLoadingAuth(true);
+
+        try {
+            const response = await api.post('/session',
+                {
+                    email,
+                    password
+                }
+            )
+
+            const {id, name, token} = response.data;
+
+            const data = {
+                ...response.data,
+            };
+
+            await AsyncStorage.setItem('@sujeitopizzaria', JSON.stringify(data))
+
+
+            api.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+
+            setUser({
+                id,
+                name,
+                email,
+                token
+            })
+
+            setLoadingAuth(false);
+
+        } catch (err) {
+            console.log(err);
+        }
+
     }
 
     return (
