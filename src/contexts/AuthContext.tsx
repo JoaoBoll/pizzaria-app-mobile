@@ -64,14 +64,15 @@ export function AuthProvider({children}: AuthProviderProps) {
     }, [])
 
     async function signOut() {
-        AsyncStorage.setItem('@sujeitopizzaria', '{}');
-
-        setUser({
-            id: "",
-            name: "",
-            email: "",
-            token:""
-        })
+        AsyncStorage.clear()
+            .then( () => {
+                setUser({
+                    id: "",
+                    name: "",
+                    email: "",
+                    token:""
+                })
+            })
     }
 
     async function signIn({email, password} : SignInProps) {
@@ -112,7 +113,14 @@ export function AuthProvider({children}: AuthProviderProps) {
     }
 
     return (
-        <AuthContext.Provider value={{user, isAuthenticated, signIn, loadingAuth, loading, signOut}}>
+        <AuthContext.Provider value={{
+            user,
+            isAuthenticated,
+            signIn,
+            loadingAuth,
+            loading,
+            signOut
+        }}>
             {children}
         </AuthContext.Provider>
     )
