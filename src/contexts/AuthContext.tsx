@@ -1,6 +1,4 @@
 import React, {useState, createContext, ReactNode, useEffect} from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import api from "../services/api";
 import api from "../services/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -11,11 +9,6 @@ type AuthContextData = {
     loadingAuth: boolean;
     loading: boolean;
     signOut: () => Promise<void>;
-}
-
-type SignInProps = {
-    email: string;
-    password: string;
 }
 
 type UserProps = {
@@ -45,14 +38,13 @@ export function AuthProvider({children}: AuthProviderProps) {
         token: ""
     });
 
-    const [loadingAuth, setLoadingAuth] = useState(false);
-
     const [loadingAuth, setLoadingAuth] = useState(false)
     const [loading, setLoading] = useState(false)
 
     const isAuthenticated = !!user.name
 
     useEffect(() => {
+        setLoading(true);
         async function getUser() {
             const userInfo = await AsyncStorage.getItem('@sujeitopizzaria');
             let hasUser: UserProps = JSON.parse(userInfo || '{}');
@@ -68,39 +60,8 @@ export function AuthProvider({children}: AuthProviderProps) {
                 })
             }
         }
+        setLoading(false);
     }, [])
-
-    async function signIn({email, password} : SignInProps){
-
-        setLoadingAuth(true);
-
-        try {
-            const response = await api.post('/session',{
-                email,password
-            })
-
-            console.log(response.data)
-
-            const {id, name, token} = response.data;
-
-            api.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-
-            setUser({
-                id: id,
-                name: name,
-                email: email,
-                token: token
-            })
-
-            await AsyncStorage.setItem('@sujeitopizzaria', JSON.stringify(response.data));
-
-        } catch (error) {
-            console.log(error);
-        }
-
-        setLoadingAuth(false);
-
-    }
 
     async function signOut() {
         AsyncStorage.setItem('@sujeitopizzaria', '{}');
