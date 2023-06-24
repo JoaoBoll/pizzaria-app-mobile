@@ -4,6 +4,7 @@ import {AuthContext} from "../../contexts/AuthContext";
 import {useNavigation} from "@react-navigation/native";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {StackParamsList} from "../../routes/app.routes";
+import api from "../../services/api";
 
 export default function Dashboard() {
 
@@ -17,10 +18,22 @@ export default function Dashboard() {
             return;
         }
 
-        navigation.navigate('Order', {
-            number: number,
-            order_id: '123'
-        });
+        try {
+            const response = await api.post('/order', {
+                table: Number(number)
+            })
+
+            navigation.navigate('Order', {
+
+                number: number,
+                order_id: response.data.id
+            });
+
+            setNumber('');
+
+        } catch (err) {
+            console.log("Erro")
+        }
 
     }
 
