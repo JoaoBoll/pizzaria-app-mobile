@@ -8,6 +8,8 @@ import {useEffect, useState} from "react";
 import {ModalPicker} from "../../components/ModalPicker";
 import FlatList = Animated.FlatList;
 import {ListItem} from "../../components/ListItem";
+import {NativeStackNavigationProp} from "@react-navigation/native-stack";
+import {StackParamsList} from "../../routes/app.routes";
 
 type RouteDatailParams = {
     Order: {
@@ -37,6 +39,9 @@ export type ItemProps = {
 
 export default function Order() {
 
+    const route = useRoute<OrderRouteProps>();
+    const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
+
     const [category, setCategory] = useState<CategoryProps[] | []>([]);
     const [categorySelected, setCategorySelected] = useState<CategoryProps>();
     const [modalCategoryVisible, setModalCategoryVisible] = useState(false);
@@ -44,9 +49,6 @@ export default function Order() {
     const [product, setProducts] = useState<ProductProps[] | []>([]);
     const [productSelected, setProductSelected] = useState<ProductProps>();
     const [modalProductVisible, setModalProductVisible] = useState(false);
-
-    const route = useRoute<OrderRouteProps>();
-    const navigation = useNavigation();
 
     const [amount, setAmount] = useState('1');
 
@@ -128,16 +130,18 @@ export default function Order() {
             params: {
                 item_id: item_id
             }
-        }).then((res) => {
-
-            // setItems(removeItem);
-        }).catch((err) => {
-            console.log(err)
         })
         let removeItem = items.filter(item => {
             return (item.id !== item_id);
         })
         setItems(removeItem);
+    }
+
+    function handleFinishOrder() {
+        navigation.navigate("FinishOrder",{
+            number: route.params?.number,
+            order_id: route.params?.order_id}
+        )
     }
 
     return (
@@ -188,6 +192,7 @@ export default function Order() {
                 <TouchableOpacity
                     disabled={items.length === 0}
                     style={[styles.button, {opacity: items.length === 0 ? 0.3 : 1}]}
+                    onPress={handleFinishOrder}
                 >
                     <Text style={styles.buttonText}>Avançar</Text>
                 </TouchableOpacity>
